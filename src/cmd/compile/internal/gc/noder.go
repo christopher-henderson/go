@@ -6,6 +6,7 @@ package gc
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -915,6 +916,8 @@ func (p *noder) stmtFall(stmt syntax.Stmt, fallOK bool) *Node {
 		return p.switchStmt(stmt)
 	case *syntax.SelectStmt:
 		return p.selectStmt(stmt)
+	case *syntax.SearchStmt:
+		return p.searchStmt(stmt)
 	}
 	panic("unhandled Stmt")
 }
@@ -1004,6 +1007,78 @@ func (p *noder) ifStmt(stmt *syntax.IfStmt) *Node {
 			n.Rlist.Set1(e)
 		}
 	}
+	p.closeAnotherScope()
+	return n
+}
+
+func printNode(n *Node) {
+	log.Printf("\nLeft: %+v\n Right: %+v\n Ninit: %+v\n Nbody: %+v\n List: %+v\n Rlist: %+v\n Type: %+v\n Orig: %+v\n Func: %+v\n Name: %+v\n Sym: %+v\n E: %+v\n Xoffset: %+v\n Pos: %+v\n flags: %+v\n Esc: %+v\n Op: %+v\n Etype: %+v\n", n.Left,
+		n.Right,
+		n.Ninit,
+		n.Nbody,
+		n.List,
+		n.Rlist,
+		n.Type,
+		n.Orig,
+		n.Func,
+		n.Name,
+		n.Sym,
+		n.E,
+		n.Xoffset,
+		n.Pos,
+		n.flags,
+		n.Esc,
+		n.Op,
+		n.Etype)
+}
+
+func fmtNode(n *Node) string {
+	if n == nil {
+		return ""
+	}
+	return fmt.Sprintf("\nLeft: %+v\n Right: %+v\n Ninit: %+v\n Nbody: %+v\n List: %+v\n Rlist: %+v\n Type: %+v\n Orig: %+v\n Func: %+v\n Name: %+v\n Sym: %+v\n E: %+v\n Xoffset: %+v\n Pos: %+v\n flags: %+v\n Esc: %+v\n Op: %+v\n Etype: %+v\n", fmtNode(n.Left),
+		fmtNode(n.Right),
+		n.Ninit,
+		n.Nbody,
+		n.List,
+		n.Rlist,
+		n.Type,
+		fmtNode(n.Orig),
+		n.Func,
+		n.Name,
+		n.Sym,
+		n.E,
+		n.Xoffset,
+		n.Pos,
+		n.flags,
+		n.Esc,
+		n.Op,
+		n.Etype)
+}
+
+func printType(t *types.Type) {
+	if t == nil {
+		log.Println("")
+		return
+	}
+	log.Printf("Extra: %+v\n Width: %+v\n methods: %+v\n Nod: %+v\n Orig: %+v\n SliceOf: %+v\n PtrBase: %+v\n Sym: %+v\n Vargen: %+v\n Etype: %+v\n Align: %+v\n)",
+		t.Extra,
+		t.Width,
+		t.Nod,
+		t.Orig,
+		t.SliceOf,
+		t.PtrBase,
+		t.Sym,
+		t.Vargen,
+		t.Etype,
+		t.Align)
+}
+
+func (p *noder) searchStmt(stmt *syntax.SearchStmt) *Node {
+	p.openScope(stmt.Pos())
+	n := p.nod(stmt, OSEARCH, nil, nil)
+	engine := p.blockStmt(stmt.BuildEngine())
+	n.Nbody.Set(engine)
 	p.closeAnotherScope()
 	return n
 }

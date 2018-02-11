@@ -643,7 +643,7 @@ func mapdelete(t *maptype, h *hmap, key unsafe.Pointer) {
 	}
 	b := (*bmap)(add(h.buckets, bucket*uintptr(t.bucketsize)))
 	top := tophash(hash)
-search:
+__search:
 	for ; b != nil; b = b.overflow(t) {
 		for i := uintptr(0); i < bucketCnt; i++ {
 			if b.tophash[i] != top {
@@ -674,7 +674,7 @@ search:
 			}
 			b.tophash[i] = empty
 			h.count--
-			break search
+			break __search
 		}
 	}
 

@@ -89,12 +89,12 @@ func (e *Encoder) WriteField(f HeaderField) error {
 // only name matches, i points to that index and nameValueMatch
 // becomes false.
 func (e *Encoder) searchTable(f HeaderField) (i uint64, nameValueMatch bool) {
-	i, nameValueMatch = staticTable.search(f)
+	i, nameValueMatch = staticTable.__search(f)
 	if nameValueMatch {
 		return i, true
 	}
 
-	j, nameValueMatch := e.dynTab.table.search(f)
+	j, nameValueMatch := e.dynTab.table.__search(f)
 	if nameValueMatch || (i == 0 && j != 0) {
 		return j + uint64(staticTable.len()), nameValueMatch
 	}

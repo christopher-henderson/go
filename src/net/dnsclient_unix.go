@@ -357,13 +357,13 @@ func (conf *dnsConfig) nameList(name string) []string {
 	l++
 
 	// Build list of search choices.
-	names := make([]string, 0, 1+len(conf.search))
+	names := make([]string, 0, 1+len(conf.__search))
 	// If name has enough dots, try unsuffixed first.
 	if hasNdots {
 		names = append(names, name)
 	}
 	// Try suffixes that are not too long (see isDomainName).
-	for _, suffix := range conf.search {
+	for _, suffix := range conf.__search {
 		if l+len(suffix) <= 254 {
 			names = append(names, name+suffix)
 		}

@@ -237,15 +237,15 @@ func (l *TCPListener) SyscallConn() (syscall.RawConn, error) {
 	return newRawListener(l.fd)
 }
 
-// AcceptTCP accepts the next incoming call and returns the new
+// AcceptTCP _accepts the next incoming call and returns the new
 // connection.
 func (l *TCPListener) AcceptTCP() (*TCPConn, error) {
 	if !l.ok() {
 		return nil, syscall.EINVAL
 	}
-	c, err := l.accept()
+	c, err := l._accept()
 	if err != nil {
-		return nil, &OpError{Op: "accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
+		return nil, &OpError{Op: "_accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
 	}
 	return c, nil
 }
@@ -256,9 +256,9 @@ func (l *TCPListener) Accept() (Conn, error) {
 	if !l.ok() {
 		return nil, syscall.EINVAL
 	}
-	c, err := l.accept()
+	c, err := l._accept()
 	if err != nil {
-		return nil, &OpError{Op: "accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
+		return nil, &OpError{Op: "_accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
 	}
 	return c, nil
 }

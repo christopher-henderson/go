@@ -694,6 +694,12 @@ func orderstmt(n *Node, order *Order) {
 		n.Rlist.Set(orderblock(n.Rlist))
 		order.out = append(order.out, n)
 
+	case OSEARCH:
+		t := marktemp(order)
+		orderblockNodes(&n.Nbody)
+		order.out = append(order.out, n)
+		cleantemp(t, order)
+
 	// Special: argument will be converted to interface using convT2E
 	// so make sure it is an addressable temporary.
 	case OPANIC:

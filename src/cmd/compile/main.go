@@ -37,7 +37,8 @@ var archInits = map[string]func(*gc.Arch){
 
 func main() {
 	// disable timestamps for reproducible output
-	log.SetFlags(0)
+	// log.SetFlags(0)
+	log.SetFlags(log.LstdFlags | log.Llongfile)
 	log.SetPrefix("compile: ")
 
 	archInit, ok := archInits[objabi.GOARCH]

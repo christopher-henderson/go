@@ -418,20 +418,20 @@ func casebody(sw *Node, typeswvar *Node) {
 				if run-j >= integerRangeMin {
 					// Search for integer ranges in s[j:run].
 					// Typechecking is done, so all values are already in an appropriate range.
-					search := s[j:run]
-					sort.Sort(constIntNodesByVal(search))
-					for beg, end := 0, 1; end <= len(search); end++ {
-						if end < len(search) && search[end].Int64() == search[end-1].Int64()+1 {
+					__search := s[j:run]
+					sort.Sort(constIntNodesByVal(__search))
+					for beg, end := 0, 1; end <= len(__search); end++ {
+						if end < len(__search) && __search[end].Int64() == __search[end-1].Int64()+1 {
 							continue
 						}
 						if end-beg >= integerRangeMin {
 							// Record range in List.
 							c := nod(OCASE, nil, jmp)
-							c.List.Set2(search[beg], search[end-1])
+							c.List.Set2(__search[beg], __search[end-1])
 							cas = append(cas, c)
 						} else {
 							// Not large enough for range; record separately.
-							for _, n := range search[beg:end] {
+							for _, n := range __search[beg:end] {
 								cas = append(cas, nod(OCASE, n, jmp))
 							}
 						}
@@ -568,7 +568,7 @@ Outer:
 		if !ok {
 			// First entry for this hash.
 			nn = append(nn, c.node)
-			seen[c.hash] = nn[len(nn)-1 : len(nn) : len(nn)]
+			seen[c.hash] = nn[len(nn)-1 : len(nn):len(nn)]
 			continue
 		}
 		for _, n := range prev {

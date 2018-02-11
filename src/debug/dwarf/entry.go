@@ -17,9 +17,9 @@ import (
 
 // a single entry's description: a sequence of attributes
 type abbrev struct {
-	tag      Tag
-	children bool
-	field    []afield
+	tag       Tag
+	_children bool
+	field     []afield
 }
 
 type afield struct {
@@ -76,7 +76,7 @@ func (d *Data) parseAbbrev(off uint64, vers int) (abbrevTable, error) {
 		// Walk over attributes again, this time writing them down.
 		var a abbrev
 		a.tag = Tag(b.uint())
-		a.children = b.uint8() != 0
+		a._children = b.uint8() != 0
 		a.field = make([]afield, n)
 		for i := range a.field {
 			a.field[i].attr = Attr(b.uint())
@@ -377,7 +377,7 @@ func (b *buf) entry(atab abbrevTable, ubase Offset) *Entry {
 	e := &Entry{
 		Offset:   off,
 		Tag:      a.tag,
-		Children: a.children,
+		Children: a._children,
 		Field:    make([]Field, len(a.field)),
 	}
 	for i := range e.Field {

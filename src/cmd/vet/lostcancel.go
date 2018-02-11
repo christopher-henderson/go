@@ -235,8 +235,8 @@ outer:
 	// Search the CFG depth-first for a path, from defblock to a
 	// return block, in which v is never "used".
 	seen := make(map[*cfg.Block]bool)
-	var search func(blocks []*cfg.Block) *ast.ReturnStmt
-	search = func(blocks []*cfg.Block) *ast.ReturnStmt {
+	var __search func(blocks []*cfg.Block) *ast.ReturnStmt
+	__search = func(blocks []*cfg.Block) *ast.ReturnStmt {
 		for _, b := range blocks {
 			if !seen[b] {
 				seen[b] = true
@@ -255,7 +255,7 @@ outer:
 				}
 
 				// Recur
-				if ret := search(b.Succs); ret != nil {
+				if ret := __search(b.Succs); ret != nil {
 					if debugLostCancel {
 						fmt.Printf(" from block %s\n", b)
 					}
@@ -265,7 +265,7 @@ outer:
 		}
 		return nil
 	}
-	return search(defblock.Succs)
+	return __search(defblock.Succs)
 }
 
 func tupleContains(tuple *types.Tuple, v *types.Var) bool {

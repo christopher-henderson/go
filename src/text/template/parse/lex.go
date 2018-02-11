@@ -166,8 +166,8 @@ func (l *lexer) ignore() {
 	l.start = l.pos
 }
 
-// accept consumes the next rune if it's from the valid set.
-func (l *lexer) accept(valid string) bool {
+// _accept consumes the next rune if it's from the valid set.
+func (l *lexer) _accept(valid string) bool {
 	if strings.ContainsRune(valid, l.next()) {
 		return true
 	}
@@ -175,8 +175,8 @@ func (l *lexer) accept(valid string) bool {
 	return false
 }
 
-// acceptRun consumes a run of runes from the valid set.
-func (l *lexer) acceptRun(valid string) {
+// _acceptRun consumes a run of runes from the valid set.
+func (l *lexer) _acceptRun(valid string) {
 	for strings.ContainsRune(valid, l.next()) {
 	}
 	l.backup()
@@ -497,7 +497,7 @@ func lexFieldOrVariable(l *lexer, typ itemType) stateFn {
 
 // atTerminator reports whether the input is at valid termination character to
 // appear after an identifier. Breaks .X.Y into two pieces. Also catches cases
-// like "$x+2" not being acceptable without a space, in case we decide one
+// like "$x+2" not being _acceptable without a space, in case we decide one
 // day to implement arithmetic.
 func (l *lexer) atTerminator() bool {
 	r := l.peek()
@@ -539,7 +539,7 @@ Loop:
 }
 
 // lexNumber scans a number: decimal, octal, hex, float, or imaginary. This
-// isn't a perfect number scanner - for instance it accepts "." and "0x0.2"
+// isn't a perfect number scanner - for instance it _accepts "." and "0x0.2"
 // and "089" - but when it's wrong the input is invalid and the parser (via
 // strconv) will notice.
 func lexNumber(l *lexer) stateFn {
@@ -560,22 +560,22 @@ func lexNumber(l *lexer) stateFn {
 
 func (l *lexer) scanNumber() bool {
 	// Optional leading sign.
-	l.accept("+-")
+	l._accept("+-")
 	// Is it hex?
 	digits := "0123456789"
-	if l.accept("0") && l.accept("xX") {
+	if l._accept("0") && l._accept("xX") {
 		digits = "0123456789abcdefABCDEF"
 	}
-	l.acceptRun(digits)
-	if l.accept(".") {
-		l.acceptRun(digits)
+	l._acceptRun(digits)
+	if l._accept(".") {
+		l._acceptRun(digits)
 	}
-	if l.accept("eE") {
-		l.accept("+-")
-		l.acceptRun("0123456789")
+	if l._accept("eE") {
+		l._accept("+-")
+		l._acceptRun("0123456789")
 	}
 	// Is it imaginary?
-	l.accept("i")
+	l._accept("i")
 	// Next thing mustn't be alphanumeric.
 	if isAlphaNumeric(l.peek()) {
 		l.next()

@@ -476,18 +476,18 @@ func indexRune(s string, r rune) int {
 
 // consume reads the next rune in the input and reports whether it is in the ok string.
 // If accept is true, it puts the character into the input token.
-func (s *ss) consume(ok string, accept bool) bool {
+func (s *ss) consume(ok string, _accept bool) bool {
 	r := s.getRune()
 	if r == eof {
 		return false
 	}
 	if indexRune(ok, r) >= 0 {
-		if accept {
+		if _accept {
 			s.buf.WriteRune(r)
 		}
 		return true
 	}
-	if r != eof && accept {
+	if r != eof && _accept {
 		s.UnreadRune()
 	}
 	return false
@@ -512,7 +512,7 @@ func (s *ss) notEOF() {
 
 // accept checks the next rune in the input. If it's a byte (sic) in the string, it puts it in the
 // buffer and returns true. Otherwise it return false.
-func (s *ss) accept(ok string) bool {
+func (s *ss) _accept(ok string) bool {
 	return s.consume(ok, true)
 }
 
@@ -541,12 +541,12 @@ func (s *ss) scanBool(verb rune) bool {
 	case '1':
 		return true
 	case 't', 'T':
-		if s.accept("rR") && (!s.accept("uU") || !s.accept("eE")) {
+		if s._accept("rR") && (!s._accept("uU") || !s._accept("eE")) {
 			s.error(boolError)
 		}
 		return true
 	case 'f', 'F':
-		if s.accept("aA") && (!s.accept("lL") || !s.accept("sS") || !s.accept("eE")) {
+		if s._accept("aA") && (!s._accept("lL") || !s._accept("sS") || !s._accept("eE")) {
 			s.error(boolError)
 		}
 		return false
@@ -588,11 +588,11 @@ func (s *ss) getBase(verb rune) (base int, digits string) {
 func (s *ss) scanNumber(digits string, haveDigits bool) string {
 	if !haveDigits {
 		s.notEOF()
-		if !s.accept(digits) {
+		if !s._accept(digits) {
 			s.errorString("expected integer")
 		}
 	}
-	for s.accept(digits) {
+	for s._accept(digits) {
 	}
 	return string(s.buf)
 }
@@ -616,7 +616,7 @@ func (s *ss) scanBasePrefix() (base int, digits string, found bool) {
 	if !s.peek("0") {
 		return 10, decimalDigits, false
 	}
-	s.accept("0")
+	s._accept("0")
 	found = true // We've put a digit into the token buffer.
 	// Special cases for '0' && '0x'
 	base, digits = 8, octalDigits
@@ -642,7 +642,7 @@ func (s *ss) scanInt(verb rune, bitSize int) int64 {
 			s.errorString("bad unicode format ")
 		}
 	} else {
-		s.accept(sign) // If there's a sign, it will be left in the token buffer.
+		s._accept(sign) // If there's a sign, it will be left in the token buffer.
 		if verb == 'v' {
 			base, digits, haveDigits = s.scanBasePrefix()
 		}
@@ -696,30 +696,30 @@ func (s *ss) scanUint(verb rune, bitSize int) uint64 {
 func (s *ss) floatToken() string {
 	s.buf = s.buf[:0]
 	// NaN?
-	if s.accept("nN") && s.accept("aA") && s.accept("nN") {
+	if s._accept("nN") && s._accept("aA") && s._accept("nN") {
 		return string(s.buf)
 	}
 	// leading sign?
-	s.accept(sign)
+	s._accept(sign)
 	// Inf?
-	if s.accept("iI") && s.accept("nN") && s.accept("fF") {
+	if s._accept("iI") && s._accept("nN") && s._accept("fF") {
 		return string(s.buf)
 	}
 	// digits?
-	for s.accept(decimalDigits) {
+	for s._accept(decimalDigits) {
 	}
 	// decimal point?
-	if s.accept(period) {
+	if s._accept(period) {
 		// fraction?
-		for s.accept(decimalDigits) {
+		for s._accept(decimalDigits) {
 		}
 	}
 	// exponent?
-	if s.accept(exponent) {
+	if s._accept(exponent) {
 		// leading sign?
-		s.accept(sign)
+		s._accept(sign)
 		// digits?
-		for s.accept(decimalDigits) {
+		for s._accept(decimalDigits) {
 		}
 	}
 	return string(s.buf)
@@ -730,20 +730,20 @@ func (s *ss) floatToken() string {
 // number and there are no spaces within.
 func (s *ss) complexTokens() (real, imag string) {
 	// TODO: accept N and Ni independently?
-	parens := s.accept("(")
+	parens := s._accept("(")
 	real = s.floatToken()
 	s.buf = s.buf[:0]
 	// Must now have a sign.
-	if !s.accept("+-") {
+	if !s._accept("+-") {
 		s.error(complexError)
 	}
 	// Sign is now in buffer
 	imagSign := string(s.buf)
 	imag = s.floatToken()
-	if !s.accept("i") {
+	if !s._accept("i") {
 		s.error(complexError)
 	}
-	if parens && !s.accept(")") {
+	if parens && !s._accept(")") {
 		s.error(complexError)
 	}
 	return real, imagSign + imag

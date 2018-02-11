@@ -158,8 +158,8 @@ func dialUnix(ctx context.Context, net string, laddr, raddr *UnixAddr) (*UnixCon
 	return newUnixConn(fd), nil
 }
 
-func (ln *UnixListener) accept() (*UnixConn, error) {
-	fd, err := ln.fd.accept()
+func (ln *UnixListener) _accept() (*UnixConn, error) {
+	fd, err := ln.fd._accept()
 	if err != nil {
 		return nil, err
 	}

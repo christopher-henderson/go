@@ -405,6 +405,16 @@ type (
 		Rbrace src.Pos
 		stmt
 	}
+
+	SearchStmt struct {
+		Root        Expr
+		UType       Expr
+		Concurrency Expr
+		Children    *BlockStmt
+		Accept      *BlockStmt
+		Reject      *BlockStmt
+		stmt
+	}
 )
 
 type (

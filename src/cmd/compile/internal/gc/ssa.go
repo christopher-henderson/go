@@ -851,6 +851,19 @@ func (s *state) stmt(n *Node) {
 		}
 		s.startBlock(bEnd)
 
+	case OSEARCH:
+		bThen := s.f.NewBlock(ssa.BlockPlain)
+		bEnd := s.f.NewBlock(ssa.BlockPlain)
+		if b := s.endBlock(); b != nil {
+			b.AddEdgeTo(bThen)
+		}
+		s.startBlock(bThen)
+		s.stmtList(n.Nbody)
+		if b := s.endBlock(); b != nil {
+			b.AddEdgeTo(bEnd)
+		}
+		s.startBlock(bEnd)
+
 	case ORETURN:
 		s.stmtList(n.List)
 		b := s.exit()

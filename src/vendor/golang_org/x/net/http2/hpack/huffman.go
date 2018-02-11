@@ -58,11 +58,11 @@ func huffmanDecode(buf *bytes.Buffer, maxLen int, v []byte) error {
 		sbits += 8
 		for cbits >= 8 {
 			idx := byte(cur >> (cbits - 8))
-			n = n.children[idx]
+			n = n._children[idx]
 			if n == nil {
 				return ErrInvalidHuffman
 			}
-			if n.children == nil {
+			if n._children == nil {
 				if maxLen != 0 && buf.Len() == maxLen {
 					return ErrStringLength
 				}
@@ -76,11 +76,11 @@ func huffmanDecode(buf *bytes.Buffer, maxLen int, v []byte) error {
 		}
 	}
 	for cbits > 0 {
-		n = n.children[byte(cur<<(8-cbits))]
+		n = n._children[byte(cur<<(8-cbits))]
 		if n == nil {
 			return ErrInvalidHuffman
 		}
-		if n.children != nil || n.codeLen > cbits {
+		if n._children != nil || n.codeLen > cbits {
 			break
 		}
 		if maxLen != 0 && buf.Len() == maxLen {
@@ -106,7 +106,7 @@ func huffmanDecode(buf *bytes.Buffer, maxLen int, v []byte) error {
 
 type node struct {
 	// children is non-nil for internal nodes
-	children []*node
+	_children []*node
 
 	// The following are only valid if children is nil:
 	codeLen uint8 // number of bits that led to the output of sym
@@ -114,7 +114,7 @@ type node struct {
 }
 
 func newInternalNode() *node {
-	return &node{children: make([]*node, 256)}
+	return &node{_children: make([]*node, 256)}
 }
 
 var rootHuffmanNode = newInternalNode()
@@ -133,15 +133,15 @@ func addDecoderNode(sym byte, code uint32, codeLen uint8) {
 	for codeLen > 8 {
 		codeLen -= 8
 		i := uint8(code >> codeLen)
-		if cur.children[i] == nil {
-			cur.children[i] = newInternalNode()
+		if cur._children[i] == nil {
+			cur._children[i] = newInternalNode()
 		}
-		cur = cur.children[i]
+		cur = cur._children[i]
 	}
 	shift := 8 - codeLen
 	start, end := int(uint8(code<<shift)), int(1<<shift)
 	for i := start; i < start+end; i++ {
-		cur.children[i] = &node{sym: sym, codeLen: codeLen}
+		cur._children[i] = &node{sym: sym, codeLen: codeLen}
 	}
 }
 

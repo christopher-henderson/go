@@ -804,7 +804,7 @@ func mapdelete_fast32(t *maptype, h *hmap, key uint32) {
 		growWork_fast32(t, h, bucket)
 	}
 	b := (*bmap)(add(h.buckets, bucket*uintptr(t.bucketsize)))
-search:
+__search:
 	for ; b != nil; b = b.overflow(t) {
 		for i, k := uintptr(0), b.keys(); i < bucketCnt; i, k = i+1, add(k, 4) {
 			if key != *(*uint32)(k) || b.tophash[i] == empty {
@@ -821,7 +821,7 @@ search:
 			}
 			b.tophash[i] = empty
 			h.count--
-			break search
+			break __search
 		}
 	}
 
@@ -853,7 +853,7 @@ func mapdelete_fast64(t *maptype, h *hmap, key uint64) {
 		growWork_fast64(t, h, bucket)
 	}
 	b := (*bmap)(add(h.buckets, bucket*uintptr(t.bucketsize)))
-search:
+__search:
 	for ; b != nil; b = b.overflow(t) {
 		for i, k := uintptr(0), b.keys(); i < bucketCnt; i, k = i+1, add(k, 8) {
 			if key != *(*uint64)(k) || b.tophash[i] == empty {
@@ -870,7 +870,7 @@ search:
 			}
 			b.tophash[i] = empty
 			h.count--
-			break search
+			break __search
 		}
 	}
 
@@ -904,7 +904,7 @@ func mapdelete_faststr(t *maptype, h *hmap, ky string) {
 	}
 	b := (*bmap)(add(h.buckets, bucket*uintptr(t.bucketsize)))
 	top := tophash(hash)
-search:
+__search:
 	for ; b != nil; b = b.overflow(t) {
 		for i, kptr := uintptr(0), b.keys(); i < bucketCnt; i, kptr = i+1, add(kptr, 2*sys.PtrSize) {
 			k := (*stringStruct)(kptr)
@@ -923,7 +923,7 @@ search:
 			}
 			b.tophash[i] = empty
 			h.count--
-			break search
+			break __search
 		}
 	}
 

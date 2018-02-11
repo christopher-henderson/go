@@ -82,7 +82,7 @@ func (fd *netFD) connect(ctx context.Context, la, ra syscall.Sockaddr) (rsa sysc
 		return nil, nil
 	case syscall.EINVAL:
 		// On Solaris we can see EINVAL if the socket has
-		// already been accepted and closed by the server.
+		// already been _accepted and closed by the server.
 		// Treat this as a successful connection--writes to
 		// the socket will see EOF.  For details and a test
 		// case in C see https://golang.org/issue/6828.
@@ -234,7 +234,7 @@ func (fd *netFD) writeMsg(p []byte, oob []byte, sa syscall.Sockaddr) (n int, oob
 	return n, oobn, wrapSyscallError("sendmsg", err)
 }
 
-func (fd *netFD) accept() (netfd *netFD, err error) {
+func (fd *netFD) _accept() (netfd *netFD, err error) {
 	d, rsa, errcall, err := fd.pfd.Accept()
 	if err != nil {
 		if errcall != "" {

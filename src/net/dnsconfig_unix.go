@@ -21,7 +21,7 @@ var (
 
 type dnsConfig struct {
 	servers    []string      // server addresses (in host:port form) to use
-	search     []string      // rooted suffixes to append to local name
+	__search   []string      // rooted suffixes to append to local name
 	ndots      int           // number of dots in name to trigger absolute lookup
 	timeout    time.Duration // wait before giving up on a query, including retries
 	attempts   int           // lost packets before giving up on server
@@ -43,7 +43,7 @@ func dnsReadConfig(filename string) *dnsConfig {
 	file, err := open(filename)
 	if err != nil {
 		conf.servers = defaultNS
-		conf.search = dnsDefaultSearch()
+		conf.__search = dnsDefaultSearch()
 		conf.err = err
 		return conf
 	}
@@ -52,7 +52,7 @@ func dnsReadConfig(filename string) *dnsConfig {
 		conf.mtime = fi.ModTime()
 	} else {
 		conf.servers = defaultNS
-		conf.search = dnsDefaultSearch()
+		conf.__search = dnsDefaultSearch()
 		conf.err = err
 		return conf
 	}
@@ -80,13 +80,13 @@ func dnsReadConfig(filename string) *dnsConfig {
 
 		case "domain": // set search path to just this domain
 			if len(f) > 1 {
-				conf.search = []string{ensureRooted(f[1])}
+				conf.__search = []string{ensureRooted(f[1])}
 			}
 
 		case "search": // set search path to given servers
-			conf.search = make([]string, len(f)-1)
-			for i := 0; i < len(conf.search); i++ {
-				conf.search[i] = ensureRooted(f[i+1])
+			conf.__search = make([]string, len(f)-1)
+			for i := 0; i < len(conf.__search); i++ {
+				conf.__search[i] = ensureRooted(f[i+1])
 			}
 
 		case "options": // magic options
@@ -132,8 +132,8 @@ func dnsReadConfig(filename string) *dnsConfig {
 	if len(conf.servers) == 0 {
 		conf.servers = defaultNS
 	}
-	if len(conf.search) == 0 {
-		conf.search = dnsDefaultSearch()
+	if len(conf.__search) == 0 {
+		conf.__search = dnsDefaultSearch()
 	}
 	return conf
 }

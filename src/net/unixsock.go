@@ -231,15 +231,15 @@ func (l *UnixListener) SyscallConn() (syscall.RawConn, error) {
 	return newRawListener(l.fd)
 }
 
-// AcceptUnix accepts the next incoming call and returns the new
+// AcceptUnix _accepts the next incoming call and returns the new
 // connection.
 func (l *UnixListener) AcceptUnix() (*UnixConn, error) {
 	if !l.ok() {
 		return nil, syscall.EINVAL
 	}
-	c, err := l.accept()
+	c, err := l._accept()
 	if err != nil {
-		return nil, &OpError{Op: "accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
+		return nil, &OpError{Op: "_accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
 	}
 	return c, nil
 }
@@ -250,14 +250,14 @@ func (l *UnixListener) Accept() (Conn, error) {
 	if !l.ok() {
 		return nil, syscall.EINVAL
 	}
-	c, err := l.accept()
+	c, err := l._accept()
 	if err != nil {
-		return nil, &OpError{Op: "accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
+		return nil, &OpError{Op: "_accept", Net: l.fd.net, Source: nil, Addr: l.fd.laddr, Err: err}
 	}
 	return c, nil
 }
 
-// Close stops listening on the Unix address. Already accepted
+// Close stops listening on the Unix address. Already _accepted
 // connections are not closed.
 func (l *UnixListener) Close() error {
 	if !l.ok() {
