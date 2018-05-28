@@ -118,6 +118,7 @@ const (
 	SELECT
 	STRUCT
 	SWITCH
+	SEARCH
 	TYPE
 	VAR
 	keyword_end
@@ -219,6 +220,7 @@ var tokens = [...]string{
 	SELECT: "select",
 	STRUCT: "struct",
 	SWITCH: "switch",
+	SEARCH: "search",
 	TYPE:   "type",
 	VAR:    "var",
 }

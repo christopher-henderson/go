@@ -249,10 +249,10 @@ func propagateCancel(parent Context, child canceler) {
 			// parent has already been canceled
 			child.cancel(false, p.err)
 		} else {
-			if p.children == nil {
-				p.children = make(map[canceler]struct{})
+			if p._children == nil {
+				p._children = make(map[canceler]struct{})
 			}
-			p.children[child] = struct{}{}
+			p._children[child] = struct{}{}
 		}
 		p.mu.Unlock()
 	} else {
@@ -291,8 +291,8 @@ func removeChild(parent Context, child canceler) {
 		return
 	}
 	p.mu.Lock()
-	if p.children != nil {
-		delete(p.children, child)
+	if p._children != nil {
+		delete(p._children, child)
 	}
 	p.mu.Unlock()
 }
@@ -316,10 +316,10 @@ func init() {
 type cancelCtx struct {
 	Context
 
-	mu       sync.Mutex            // protects following fields
-	done     chan struct{}         // created lazily, closed by first cancel call
-	children map[canceler]struct{} // set to nil by the first cancel call
-	err      error                 // set to non-nil by the first cancel call
+	mu        sync.Mutex            // protects following fields
+	done      chan struct{}         // created lazily, closed by first cancel call
+	_children map[canceler]struct{} // set to nil by the first cancel call
+	err       error                 // set to non-nil by the first cancel call
 }
 
 func (c *cancelCtx) Done() <-chan struct{} {
@@ -359,11 +359,11 @@ func (c *cancelCtx) cancel(removeFromParent bool, err error) {
 	} else {
 		close(c.done)
 	}
-	for child := range c.children {
+	for child := range c._children {
 		// NOTE: acquiring the child's lock while holding parent's lock.
 		child.cancel(false, err)
 	}
-	c.children = nil
+	c._children = nil
 	c.mu.Unlock()
 
 	if removeFromParent {

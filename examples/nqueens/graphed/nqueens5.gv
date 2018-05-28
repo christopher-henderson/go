@@ -1,0 +1,663 @@
+digraph nqueens5 {
+0 [label = "FCG"]
+	011 [label = "1, 1"]
+	edge [color=blue]
+	0 -> 011
+	01221 [label = "2, 1"]
+	edge [color=red]
+	012 -> 01221
+	01222 [label = "2, 2"]
+	edge [color=red]
+	012 -> 01222
+	01223 [label = "2, 3"]
+	edge [color=red]
+	012 -> 01223
+	0122431 [label = "3, 1"]
+	edge [color=green]
+	01224 -> 0122431
+	012243141 [label = "4, 1"]
+	edge [color=green]
+	0122431 -> 012243141
+	012 [label = "1, 2"]
+	edge [color=blue]
+	0 -> 012
+	013 [label = "1, 3"]
+	edge [color=blue]
+	0 -> 013
+	01121 [label = "2, 1"]
+	edge [color=orange]
+	011 -> 01121
+	012243142 [label = "4, 2"]
+	edge [color=green]
+	0122431 -> 012243142
+	012243143 [label = "4, 3"]
+	edge [color=green]
+	0122431 -> 012243143
+	01122 [label = "2, 2"]
+	edge [color=orange]
+	011 -> 01122
+	01123 [label = "2, 3"]
+	edge [color=orange]
+	011 -> 01123
+	01224314351 [label = "5, 1"]
+	edge [color=green]
+	012243143 -> 01224314351
+	01224314352 [label = "5, 2"]
+	edge [color=green]
+	012243143 -> 01224314352
+	01224314353 [label = "5, 3"]
+	edge [color=green]
+	012243143 -> 01224314353
+	01224314354 [label = "5, 4"]
+	edge [color=green]
+	012243143 -> 01224314354
+	01224314355 [label = "5, 5"]
+	edge [color=green]
+	012243143 -> 01224314355
+	012243144 [label = "4, 4"]
+	edge [color=green]
+	0122431 -> 012243144
+	01321 [label = "2, 1"]
+	edge [color=blue]
+	013 -> 01321
+	0112331 [label = "3, 1"]
+	edge [color=orange]
+	01123 -> 0112331
+	01224 [label = "2, 4"]
+	edge [color=red]
+	012 -> 01224
+	0112332 [label = "3, 2"]
+	edge [color=orange]
+	01123 -> 0112332
+	01225 [label = "2, 5"]
+	edge [color=red]
+	012 -> 01225
+	012243145 [label = "4, 5"]
+	edge [color=green]
+	0122431 -> 012243145
+	0122432 [label = "3, 2"]
+	edge [color=green]
+	01224 -> 0122432
+	0122433 [label = "3, 3"]
+	edge [color=green]
+	01224 -> 0122433
+	0122531 [label = "3, 1"]
+	edge [color=red]
+	01225 -> 0122531
+	0122434 [label = "3, 4"]
+	edge [color=green]
+	01224 -> 0122434
+	0122435 [label = "3, 5"]
+	edge [color=green]
+	01224 -> 0122435
+	0132131 [label = "3, 1"]
+	edge [color=blue]
+	01321 -> 0132131
+	0132132 [label = "3, 2"]
+	edge [color=blue]
+	01321 -> 0132132
+	012253141 [label = "4, 1"]
+	edge [color=red]
+	0122531 -> 012253141
+	0132133 [label = "3, 3"]
+	edge [color=blue]
+	01321 -> 0132133
+	012253142 [label = "4, 2"]
+	edge [color=red]
+	0122531 -> 012253142
+	0112333 [label = "3, 3"]
+	edge [color=orange]
+	01123 -> 0112333
+	0112334 [label = "3, 4"]
+	edge [color=orange]
+	01123 -> 0112334
+	0132134 [label = "3, 4"]
+	edge [color=blue]
+	01321 -> 0132134
+	0132135 [label = "3, 5"]
+	edge [color=blue]
+	01321 -> 0132135
+	01322 [label = "2, 2"]
+	edge [color=blue]
+	013 -> 01322
+	012253143 [label = "4, 3"]
+	edge [color=red]
+	0122531 -> 012253143
+	012253144 [label = "4, 4"]
+	edge [color=red]
+	0122531 -> 012253144
+	013213441 [label = "4, 1"]
+	edge [color=blue]
+	0132134 -> 013213441
+	013213442 [label = "4, 2"]
+	edge [color=blue]
+	0132134 -> 013213442
+	01225314451 [label = "5, 1"]
+	edge [color=red]
+	012253144 -> 01225314451
+	01321344251 [label = "5, 1"]
+	edge [color=blue]
+	013213442 -> 01321344251
+	0112335 [label = "3, 5"]
+	edge [color=orange]
+	01123 -> 0112335
+	01321344252 [label = "5, 2"]
+	edge [color=blue]
+	013213442 -> 01321344252
+	01225314452 [label = "5, 2"]
+	edge [color=red]
+	012253144 -> 01225314452
+	01323 [label = "2, 3"]
+	edge [color=blue]
+	013 -> 01323
+	01225314453 [label = "5, 3"]
+	edge [color=red]
+	012253144 -> 01225314453
+	01324 [label = "2, 4"]
+	edge [color=blue]
+	013 -> 01324
+	01225314454 [label = "5, 4"]
+	edge [color=red]
+	012253144 -> 01225314454
+	01225314455 [label = "5, 5"]
+	edge [color=red]
+	012253144 -> 01225314455
+	011233541 [label = "4, 1"]
+	edge [color=orange]
+	0112335 -> 011233541
+	01325 [label = "2, 5"]
+	edge [color=blue]
+	013 -> 01325
+	012253145 [label = "4, 5"]
+	edge [color=red]
+	0122531 -> 012253145
+	0122532 [label = "3, 2"]
+	edge [color=red]
+	01225 -> 0122532
+	0122533 [label = "3, 3"]
+	edge [color=red]
+	01225 -> 0122533
+	012253341 [label = "4, 1"]
+	edge [color=red]
+	0122533 -> 012253341
+	011233542 [label = "4, 2"]
+	edge [color=orange]
+	0112335 -> 011233542
+	01321344253 [label = "5, 3"]
+	edge [color=blue]
+	013213442 -> 01321344253
+	01123354251 [label = "5, 1"]
+	edge [color=orange]
+	011233542 -> 01123354251
+	01123354252 [label = "5, 2"]
+	edge [color=orange]
+	011233542 -> 01123354252
+	01123354253 [label = "5, 3"]
+	edge [color=orange]
+	011233542 -> 01123354253
+	01123354254 [label = "5, 4"]
+	edge [color=orange]
+	011233542 -> 01123354254
+	01321344254 [label = "5, 4"]
+	edge [color=blue]
+	013213442 -> 01321344254
+	0132531 [label = "3, 1"]
+	edge [color=blue]
+	01325 -> 0132531
+	0132532 [label = "3, 2"]
+	edge [color=blue]
+	01325 -> 0132532
+	01225334151 [label = "5, 1"]
+	edge [color=red]
+	012253341 -> 01225334151
+	01225334152 [label = "5, 2"]
+	edge [color=red]
+	012253341 -> 01225334152
+	01123354255 [label = "5, 5"]
+	edge [color=orange]
+	011233542 -> 01123354255
+	011233543 [label = "4, 3"]
+	edge [color=orange]
+	0112335 -> 011233543
+	013253241 [label = "4, 1"]
+	edge [color=blue]
+	0132532 -> 013253241
+	011233544 [label = "4, 4"]
+	edge [color=orange]
+	0112335 -> 011233544
+	011233545 [label = "4, 5"]
+	edge [color=orange]
+	0112335 -> 011233545
+	01124 [label = "2, 4"]
+	edge [color=orange]
+	011 -> 01124
+	0112431 [label = "3, 1"]
+	edge [color=orange]
+	01124 -> 0112431
+	013253242 [label = "4, 2"]
+	edge [color=blue]
+	0132532 -> 013253242
+	013253243 [label = "4, 3"]
+	edge [color=blue]
+	0132532 -> 013253243
+	011243241 [label = "4, 1"]
+	edge [color=orange]
+	0112432 -> 011243241
+	0112432 [label = "3, 2"]
+	edge [color=orange]
+	01124 -> 0112432
+	011243242 [label = "4, 2"]
+	edge [color=orange]
+	0112432 -> 011243242
+	01321344255 [label = "5, 5"]
+	edge [color=blue]
+	013213442 -> 01321344255
+	01325324451 [label = "5, 1"]
+	edge [color=blue]
+	013253244 -> 01325324451
+	013213443 [label = "4, 3"]
+	edge [color=blue]
+	0132134 -> 013213443
+	013253244 [label = "4, 4"]
+	edge [color=blue]
+	0132532 -> 013253244
+	013213444 [label = "4, 4"]
+	edge [color=blue]
+	0132134 -> 013213444
+	013213445 [label = "4, 5"]
+	edge [color=blue]
+	0132134 -> 013213445
+	01325324452 [label = "5, 2"]
+	edge [color=blue]
+	013253244 -> 01325324452
+	01325324453 [label = "5, 3"]
+	edge [color=blue]
+	013253244 -> 01325324453
+	01325324454 [label = "5, 4"]
+	edge [color=blue]
+	013253244 -> 01325324454
+	01225334153 [label = "5, 3"]
+	edge [color=red]
+	012253341 -> 01225334153
+	01225334154 [label = "5, 4"]
+	edge [color=red]
+	012253341 -> 01225334154
+	01225334155 [label = "5, 5"]
+	edge [color=red]
+	012253341 -> 01225334155
+	012253342 [label = "4, 2"]
+	edge [color=red]
+	0122533 -> 012253342
+	012253343 [label = "4, 3"]
+	edge [color=red]
+	0122533 -> 012253343
+	011243243 [label = "4, 3"]
+	edge [color=orange]
+	0112432 -> 011243243
+	011243244 [label = "4, 4"]
+	edge [color=orange]
+	0112432 -> 011243244
+	01325324455 [label = "5, 5"]
+	edge [color=blue]
+	013253244 -> 01325324455
+	013253245 [label = "4, 5"]
+	edge [color=blue]
+	0132532 -> 013253245
+	0132533 [label = "3, 3"]
+	edge [color=blue]
+	01325 -> 0132533
+	0132534 [label = "3, 4"]
+	edge [color=blue]
+	01325 -> 0132534
+	01124324551 [label = "5, 1"]
+	edge [color=orange]
+	011243245 -> 01124324551
+	0132535 [label = "3, 5"]
+	edge [color=blue]
+	01325 -> 0132535
+	01124324552 [label = "5, 2"]
+	edge [color=orange]
+	011243245 -> 01124324552
+	01124324553 [label = "5, 3"]
+	edge [color=orange]
+	011243245 -> 01124324553
+	01421 [label = "2, 1"]
+	edge [color=blue]
+	014 -> 01421
+	01124324554 [label = "5, 4"]
+	edge [color=orange]
+	011243245 -> 01124324554
+	01124324555 [label = "5, 5"]
+	edge [color=orange]
+	011243245 -> 01124324555
+	011243245 [label = "4, 5"]
+	edge [color=orange]
+	0112432 -> 011243245
+	0142131 [label = "3, 1"]
+	edge [color=blue]
+	01421 -> 0142131
+	012253344 [label = "4, 4"]
+	edge [color=red]
+	0122533 -> 012253344
+	014 [label = "1, 4"]
+	edge [color=blue]
+	0 -> 014
+	012253345 [label = "4, 5"]
+	edge [color=red]
+	0122533 -> 012253345
+	0112433 [label = "3, 3"]
+	edge [color=orange]
+	01124 -> 0112433
+	0122534 [label = "3, 4"]
+	edge [color=red]
+	01225 -> 0122534
+	0112434 [label = "3, 4"]
+	edge [color=orange]
+	01124 -> 0112434
+	0112435 [label = "3, 5"]
+	edge [color=orange]
+	01124 -> 0112435
+	0122535 [label = "3, 5"]
+	edge [color=red]
+	01225 -> 0122535
+	0142132 [label = "3, 2"]
+	edge [color=blue]
+	01421 -> 0142132
+	0142133 [label = "3, 3"]
+	edge [color=blue]
+	01421 -> 0142133
+	01125 [label = "2, 5"]
+	edge [color=orange]
+	011 -> 01125
+	0112531 [label = "3, 1"]
+	edge [color=red]
+	01125 -> 0112531
+	0112532 [label = "3, 2"]
+	edge [color=red]
+	01125 -> 0112532
+	0142134 [label = "3, 4"]
+	edge [color=blue]
+	01421 -> 0142134
+	014213341 [label = "4, 1"]
+	edge [color=green]
+	0142133 -> 014213341
+	0142135 [label = "3, 5"]
+	edge [color=blue]
+	01421 -> 0142135
+	014213342 [label = "4, 2"]
+	edge [color=green]
+	0142133 -> 014213342
+	011253241 [label = "4, 1"]
+	edge [color=blue]
+	0112532 -> 011253241
+	014213343 [label = "4, 3"]
+	edge [color=green]
+	0142133 -> 014213343
+	011253242 [label = "4, 2"]
+	edge [color=blue]
+	0112532 -> 011253242
+	014213344 [label = "4, 4"]
+	edge [color=green]
+	0142133 -> 014213344
+	011253243 [label = "4, 3"]
+	edge [color=blue]
+	0112532 -> 011253243
+	011253244 [label = "4, 4"]
+	edge [color=blue]
+	0112532 -> 011253244
+	011253245 [label = "4, 5"]
+	edge [color=blue]
+	0112532 -> 011253245
+	0112533 [label = "3, 3"]
+	edge [color=red]
+	01125 -> 0112533
+	0112534 [label = "3, 4"]
+	edge [color=red]
+	01125 -> 0112534
+	0112535 [label = "3, 5"]
+	edge [color=red]
+	01125 -> 0112535
+	014213541 [label = "4, 1"]
+	edge [color=blue]
+	0142135 -> 014213541
+	014213542 [label = "4, 2"]
+	edge [color=blue]
+	0142135 -> 014213542
+	01421334551 [label = "5, 1"]
+	edge [color=orange]
+	014213345 -> 01421334551
+	014213543 [label = "4, 3"]
+	edge [color=blue]
+	0142135 -> 014213543
+	014213544 [label = "4, 4"]
+	edge [color=blue]
+	0142135 -> 014213544
+	01421334552 [label = "5, 2"]
+	edge [color=orange]
+	014213345 -> 01421334552
+	014213545 [label = "4, 5"]
+	edge [color=blue]
+	0142135 -> 014213545
+	014213345 [label = "4, 5"]
+	edge [color=green]
+	0142133 -> 014213345
+	01421334553 [label = "5, 3"]
+	edge [color=orange]
+	014213345 -> 01421334553
+	0142231 [label = "3, 1"]
+	edge [color=blue]
+	01422 -> 0142231
+	01422 [label = "2, 2"]
+	edge [color=blue]
+	014 -> 01422
+	0142232 [label = "3, 2"]
+	edge [color=blue]
+	01422 -> 0142232
+	01421334554 [label = "5, 4"]
+	edge [color=orange]
+	014213345 -> 01421334554
+	0142233 [label = "3, 3"]
+	edge [color=blue]
+	01422 -> 0142233
+	0142234 [label = "3, 4"]
+	edge [color=blue]
+	01422 -> 0142234
+	01421354251 [label = "5, 1"]
+	edge [color=red]
+	014213542 -> 01421354251
+	01421354252 [label = "5, 2"]
+	edge [color=red]
+	014213542 -> 01421354252
+	01421354253 [label = "5, 3"]
+	edge [color=red]
+	014213542 -> 01421354253
+	01421354254 [label = "5, 4"]
+	edge [color=red]
+	014213542 -> 01421354254
+	014223541 [label = "4, 1"]
+	edge [color=green]
+	0142235 -> 014223541
+	01421354255 [label = "5, 5"]
+	edge [color=red]
+	014213542 -> 01421354255
+	014223542 [label = "4, 2"]
+	edge [color=green]
+	0142235 -> 014223542
+	014223543 [label = "4, 3"]
+	edge [color=green]
+	0142235 -> 014223543
+	01421334555 [label = "5, 5"]
+	edge [color=orange]
+	014213345 -> 01421334555
+	0142235 [label = "3, 5"]
+	edge [color=blue]
+	01422 -> 0142235
+	01423 [label = "2, 3"]
+	edge [color=blue]
+	014 -> 01423
+	01424 [label = "2, 4"]
+	edge [color=blue]
+	014 -> 01424
+	014223544 [label = "4, 4"]
+	edge [color=green]
+	0142235 -> 014223544
+	01425 [label = "2, 5"]
+	edge [color=blue]
+	014 -> 01425
+	014223545 [label = "4, 5"]
+	edge [color=green]
+	0142235 -> 014223545
+	015 [label = "1, 5"]
+	edge [color=blue]
+	0 -> 015
+	01422354351 [label = "5, 1"]
+	edge [color=blue]
+	014223543 -> 01422354351
+	01422354352 [label = "5, 2"]
+	edge [color=blue]
+	014223543 -> 01422354352
+	01422354353 [label = "5, 3"]
+	edge [color=blue]
+	014223543 -> 01422354353
+	01521 [label = "2, 1"]
+	edge [color=orange]
+	015 -> 01521
+	01422354354 [label = "5, 4"]
+	edge [color=blue]
+	014223543 -> 01422354354
+	01422354355 [label = "5, 5"]
+	edge [color=blue]
+	014223543 -> 01422354355
+	0152131 [label = "3, 1"]
+	edge [color=red]
+	01521 -> 0152131
+	0152132 [label = "3, 2"]
+	edge [color=red]
+	01521 -> 0152132
+	0152133 [label = "3, 3"]
+	edge [color=red]
+	01521 -> 0152133
+	01522 [label = "2, 2"]
+	edge [color=orange]
+	015 -> 01522
+	0152134 [label = "3, 4"]
+	edge [color=red]
+	01521 -> 0152134
+	0152135 [label = "3, 5"]
+	edge [color=red]
+	01521 -> 0152135
+	0152331 [label = "3, 1"]
+	edge [color=orange]
+	01523 -> 0152331
+	0152231 [label = "3, 1"]
+	edge [color=green]
+	01522 -> 0152231
+	0152232 [label = "3, 2"]
+	edge [color=green]
+	01522 -> 0152232
+	0152233 [label = "3, 3"]
+	edge [color=green]
+	01522 -> 0152233
+	0152234 [label = "3, 4"]
+	edge [color=green]
+	01522 -> 0152234
+	015233141 [label = "4, 1"]
+	edge [color=orange]
+	0152331 -> 015233141
+	0152235 [label = "3, 5"]
+	edge [color=green]
+	01522 -> 0152235
+	015233142 [label = "4, 2"]
+	edge [color=orange]
+	0152331 -> 015233142
+	015233143 [label = "4, 3"]
+	edge [color=orange]
+	0152331 -> 015233143
+	015233144 [label = "4, 4"]
+	edge [color=orange]
+	0152331 -> 015233144
+	01523 [label = "2, 3"]
+	edge [color=orange]
+	015 -> 01523
+	015213441 [label = "4, 1"]
+	edge [color=blue]
+	0152134 -> 015213441
+	015213442 [label = "4, 2"]
+	edge [color=blue]
+	0152134 -> 015213442
+	015213443 [label = "4, 3"]
+	edge [color=blue]
+	0152134 -> 015213443
+	01523314451 [label = "5, 1"]
+	edge [color=red]
+	015233144 -> 01523314451
+	015233145 [label = "4, 5"]
+	edge [color=orange]
+	0152331 -> 015233145
+	01522344151 [label = "5, 1"]
+	edge [color=orange]
+	015223441 -> 01522344151
+	015213444 [label = "4, 4"]
+	edge [color=blue]
+	0152134 -> 015213444
+	015213445 [label = "4, 5"]
+	edge [color=blue]
+	0152134 -> 015213445
+	01522344152 [label = "5, 2"]
+	edge [color=orange]
+	015223441 -> 01522344152
+	0152332 [label = "3, 2"]
+	edge [color=orange]
+	01523 -> 0152332
+	0152333 [label = "3, 3"]
+	edge [color=orange]
+	01523 -> 0152333
+	0152334 [label = "3, 4"]
+	edge [color=orange]
+	01523 -> 0152334
+	015223441 [label = "4, 1"]
+	edge [color=orange]
+	0152234 -> 015223441
+	01523314452 [label = "5, 2"]
+	edge [color=red]
+	015233144 -> 01523314452
+	01523314453 [label = "5, 3"]
+	edge [color=red]
+	015233144 -> 01523314453
+	01523314454 [label = "5, 4"]
+	edge [color=red]
+	015233144 -> 01523314454
+	01523314455 [label = "5, 5"]
+	edge [color=red]
+	015233144 -> 01523314455
+	01522344153 [label = "5, 3"]
+	edge [color=orange]
+	015223441 -> 01522344153
+	01522344154 [label = "5, 4"]
+	edge [color=orange]
+	015223441 -> 01522344154
+	01522344155 [label = "5, 5"]
+	edge [color=orange]
+	015223441 -> 01522344155
+	015223442 [label = "4, 2"]
+	edge [color=orange]
+	0152234 -> 015223442
+	015223443 [label = "4, 3"]
+	edge [color=orange]
+	0152234 -> 015223443
+	015223444 [label = "4, 4"]
+	edge [color=orange]
+	0152234 -> 015223444
+	015223445 [label = "4, 5"]
+	edge [color=orange]
+	0152234 -> 015223445
+	0152335 [label = "3, 5"]
+	edge [color=orange]
+	01523 -> 0152335
+	01524 [label = "2, 4"]
+	edge [color=orange]
+	015 -> 01524
+	01525 [label = "2, 5"]
+	edge [color=orange]
+	015 -> 01525
+}

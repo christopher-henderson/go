@@ -645,8 +645,9 @@ const (
 	ORANGE    // for List = range Right { Nbody }
 	ORETURN   // return List
 	OSELECT   // select { List } (List is list of OXCASE or OCASE)
-	OSWITCH   // switch Ninit; Left { List } (List is a list of OXCASE or OCASE)
-	OTYPESW   // Left = Right.(type) (appears as .Left of OSWITCH)
+	OSEARCH
+	OSWITCH // switch Ninit; Left { List } (List is a list of OXCASE or OCASE)
+	OTYPESW // Left = Right.(type) (appears as .Left of OSWITCH)
 
 	// types
 	OTCHAN   // chan int

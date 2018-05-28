@@ -437,7 +437,7 @@ func (check *Checker) collectObjects() {
 	}
 
 	// verify that objects in package and file scopes have different names
-	for _, scope := range check.pkg.scope.children /* file scopes */ {
+	for _, scope := range check.pkg.scope._children /* file scopes */ {
 		for _, obj := range scope.elems {
 			if alt := pkg.scope.Lookup(obj.Name()); alt != nil {
 				if pkg, ok := obj.(*PkgName); ok {
@@ -495,7 +495,7 @@ func (check *Checker) unusedImports() {
 	// (initialization), use the blank identifier as explicit package name."
 
 	// check use of regular imported packages
-	for _, scope := range check.pkg.scope.children /* file scopes */ {
+	for _, scope := range check.pkg.scope._children /* file scopes */ {
 		for _, obj := range scope.elems {
 			if obj, ok := obj.(*PkgName); ok {
 				// Unused "blank imports" are automatically ignored

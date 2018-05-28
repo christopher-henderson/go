@@ -132,8 +132,8 @@ func spuriousENOTAVAIL(err error) bool {
 
 func (ln *TCPListener) ok() bool { return ln != nil && ln.fd != nil }
 
-func (ln *TCPListener) accept() (*TCPConn, error) {
-	fd, err := ln.fd.accept()
+func (ln *TCPListener) _accept() (*TCPConn, error) {
+	fd, err := ln.fd._accept()
 	if err != nil {
 		return nil, err
 	}

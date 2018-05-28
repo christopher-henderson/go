@@ -13,8 +13,8 @@ type loop struct {
 	outer  *loop  // loop containing this loop
 
 	// By default, children, exits, and depth are not initialized.
-	children []*loop  // loops nested directly within this loop. Initialized by assembleChildren().
-	exits    []*Block // exits records blocks reached by exits from this loop. Initialized by findExits().
+	_children []*loop  // loops nested directly within this loop. Initialized by assembleChildren().
+	exits     []*Block // exits records blocks reached by exits from this loop. Initialized by findExits().
 
 	// Next three fields used by regalloc and/or
 	// aid in computation of inner-ness and list of blocks.
@@ -437,7 +437,7 @@ func (ln *loopnest) assembleChildren() {
 	}
 	for _, l := range ln.loops {
 		if l.outer != nil {
-			l.outer.children = append(l.outer.children, l)
+			l.outer._children = append(l.outer._children, l)
 		}
 	}
 	ln.initializedChildren = true
@@ -515,7 +515,7 @@ func recordIfExit(l, sl *loop, b *Block) bool {
 
 func (l *loop) setDepth(d int16) {
 	l.depth = d
-	for _, c := range l.children {
+	for _, c := range l._children {
 		c.setDepth(d + 1)
 	}
 }

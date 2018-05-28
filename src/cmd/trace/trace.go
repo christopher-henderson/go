@@ -293,8 +293,8 @@ type threadStats struct {
 }
 
 type frameNode struct {
-	id       int
-	children map[uint64]frameNode
+	id        int
+	_children map[uint64]frameNode
 }
 
 type gState int
@@ -362,7 +362,7 @@ type SortIndexArg struct {
 // gset restricts goroutines that are included in the resulting trace.
 func generateTrace(params *traceParams) (ViewerData, error) {
 	ctx := &traceContext{traceParams: params}
-	ctx.frameTree.children = make(map[uint64]frameNode)
+	ctx.frameTree._children = make(map[uint64]frameNode)
 	ctx.data.Frames = make(map[string]ViewerFrame)
 	ctx.data.TimeUnit = "ns"
 	maxProc := 0
@@ -738,12 +738,12 @@ func (ctx *traceContext) buildBranch(parent frameNode, stk []*trace.Frame) int {
 	frame := stk[last]
 	stk = stk[:last]
 
-	node, ok := parent.children[frame.PC]
+	node, ok := parent._children[frame.PC]
 	if !ok {
 		ctx.frameSeq++
 		node.id = ctx.frameSeq
-		node.children = make(map[uint64]frameNode)
-		parent.children[frame.PC] = node
+		node._children = make(map[uint64]frameNode)
+		parent._children[frame.PC] = node
 		ctx.data.Frames[strconv.Itoa(node.id)] = ViewerFrame{fmt.Sprintf("%v:%v", frame.Fn, frame.Line), parent.id}
 	}
 	return ctx.buildBranch(node, stk)

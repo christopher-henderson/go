@@ -71,7 +71,7 @@ func (check *Checker) usage(scope *Scope) {
 		check.softErrorf(v.pos, "%s declared but not used", v.name)
 	}
 
-	for _, scope := range scope.children {
+	for _, scope := range scope._children {
 		// Don't go inside closure scopes a second time;
 		// they are handled explicitly by funcBody.
 		if !scope.isFunc {

@@ -354,9 +354,9 @@ const (
 )
 
 type dwAbbrev struct {
-	tag      uint8
-	children uint8
-	attr     []dwAttrForm
+	tag       uint8
+	_children uint8
+	attr      []dwAttrForm
 }
 
 var abbrevs = [DW_NABRV]dwAbbrev{
@@ -791,7 +791,7 @@ func GetAbbrev() []byte {
 		// See section 7.5.3
 		buf = AppendUleb128(buf, uint64(i))
 		buf = AppendUleb128(buf, uint64(abbrevs[i].tag))
-		buf = append(buf, byte(abbrevs[i].children))
+		buf = append(buf, byte(abbrevs[i]._children))
 		for _, f := range abbrevs[i].attr {
 			buf = AppendUleb128(buf, uint64(f.attr))
 			buf = AppendUleb128(buf, uint64(f.form))
@@ -948,7 +948,7 @@ Outer:
 
 // HasChildren returns true if 'die' uses an abbrev that supports children.
 func HasChildren(die *DWDie) bool {
-	return abbrevs[die.Abbrev].children != 0
+	return abbrevs[die.Abbrev]._children != 0
 }
 
 // PutIntConst writes a DIE for an integer constant

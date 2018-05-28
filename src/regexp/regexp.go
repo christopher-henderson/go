@@ -4,9 +4,9 @@
 
 // Package regexp implements regular expression search.
 //
-// The syntax of the regular expressions accepted is the same
+// The syntax of the regular expressions _accepted is the same
 // general syntax used by Perl, Python, and other languages.
-// More precisely, it is the syntax accepted by RE2 and described at
+// More precisely, it is the syntax _accepted by RE2 and described at
 // https://golang.org/s/re2syntax, except for \C.
 // For an overview of the syntax, run
 //   go doc regexp/syntax
@@ -685,13 +685,13 @@ func (re *Regexp) allMatches(s string, b []byte, n int, deliver func([]int)) {
 			break
 		}
 
-		accept := true
+		_accept := true
 		if matches[1] == pos {
 			// We've found an empty match.
 			if matches[0] == prevMatchEnd {
 				// We don't allow an empty match right
 				// after a previous match, so ignore it.
-				accept = false
+				_accept = false
 			}
 			var width int
 			// TODO: use step()
@@ -710,7 +710,7 @@ func (re *Regexp) allMatches(s string, b []byte, n int, deliver func([]int)) {
 		}
 		prevMatchEnd = matches[1]
 
-		if accept {
+		if _accept {
 			deliver(re.pad(matches))
 			i++
 		}

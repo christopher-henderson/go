@@ -362,7 +362,7 @@ func (fd *FD) Accept() (int, syscall.Sockaddr, string, error) {
 		return -1, nil, "", err
 	}
 	for {
-		s, rsa, errcall, err := accept(fd.Sysfd)
+		s, rsa, errcall, err := _accept(fd.Sysfd)
 		if err == nil {
 			return s, rsa, "", err
 		}

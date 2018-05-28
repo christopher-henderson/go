@@ -47,7 +47,7 @@ func Eval(fset *token.FileSet, pkg *Package, pos token.Pos, expr string) (TypeAn
 		// incorrect (files spread across a wide range of fset
 		// positions) - ignore it and just consider its children
 		// (file scopes).
-		for _, fscope := range pkg.scope.children {
+		for _, fscope := range pkg.scope._children {
 			if scope = fscope.Innermost(pos); scope != nil {
 				break
 			}

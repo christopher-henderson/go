@@ -62,6 +62,10 @@ const (
 	_Select
 	_Struct
 	_Switch
+	_Search
+	_Children
+	_Accept
+	_Reject
 	_Type
 	_Var
 
@@ -134,6 +138,10 @@ var tokstrings = [...]string{
 	_Select:      "select",
 	_Struct:      "struct",
 	_Switch:      "switch",
+	_Search:      "search",
+	_Children:    "children",
+	_Accept:      "accept",
+	_Reject:      "reject",
 	_Type:        "type",
 	_Var:         "var",
 }

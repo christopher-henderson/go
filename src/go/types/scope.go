@@ -23,12 +23,12 @@ import (
 // and looked up by name. The zero value for Scope is a ready-to-use
 // empty scope.
 type Scope struct {
-	parent   *Scope
-	children []*Scope
-	elems    map[string]Object // lazily allocated
-	pos, end token.Pos         // scope extent; may be invalid
-	comment  string            // for debugging only
-	isFunc   bool              // set if this is a function scope (internal use only)
+	parent    *Scope
+	_children []*Scope
+	elems     map[string]Object // lazily allocated
+	pos, end  token.Pos         // scope extent; may be invalid
+	comment   string            // for debugging only
+	isFunc    bool              // set if this is a function scope (internal use only)
 }
 
 // NewScope returns a new, empty scope contained in the given parent
@@ -37,7 +37,7 @@ func NewScope(parent *Scope, pos, end token.Pos, comment string) *Scope {
 	s := &Scope{parent, nil, nil, pos, end, comment, false}
 	// don't add children to Universe scope!
 	if parent != nil && parent != Universe {
-		parent.children = append(parent.children, s)
+		parent._children = append(parent._children, s)
 	}
 	return s
 }
@@ -61,10 +61,10 @@ func (s *Scope) Names() []string {
 }
 
 // NumChildren() returns the number of scopes nested in s.
-func (s *Scope) NumChildren() int { return len(s.children) }
+func (s *Scope) NumChildren() int { return len(s._children) }
 
 // Child returns the i'th child scope for 0 <= i < NumChildren().
-func (s *Scope) Child(i int) *Scope { return s.children[i] }
+func (s *Scope) Child(i int) *Scope { return s._children[i] }
 
 // Lookup returns the object in scope s with the given name if such an
 // object exists; otherwise the result is nil.
@@ -134,7 +134,7 @@ func (s *Scope) Innermost(pos token.Pos) *Scope {
 	// Package scopes do not have extents since they may be
 	// discontiguous, so iterate over the package's files.
 	if s.parent == Universe {
-		for _, s := range s.children {
+		for _, s := range s._children {
 			if inner := s.Innermost(pos); inner != nil {
 				return inner
 			}
@@ -142,7 +142,7 @@ func (s *Scope) Innermost(pos token.Pos) *Scope {
 	}
 
 	if s.Contains(pos) {
-		for _, s := range s.children {
+		for _, s := range s._children {
 			if s.Contains(pos) {
 				return s.Innermost(pos)
 			}
@@ -174,7 +174,7 @@ func (s *Scope) WriteTo(w io.Writer, n int, recurse bool) {
 	}
 
 	if recurse {
-		for _, s := range s.children {
+		for _, s := range s._children {
 			fmt.Fprintln(w)
 			s.WriteTo(w, n+1, recurse)
 		}

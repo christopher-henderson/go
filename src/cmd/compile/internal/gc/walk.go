@@ -273,6 +273,18 @@ func walkstmt(n *Node) *Node {
 		walkstmtlist(n.Nbody.Slice())
 		walkstmtlist(n.Rlist.Slice())
 
+	case OSEARCH:
+		walkstmtlist(n.Nbody.Slice())
+		// @TODO maybe someday, but otherwise delete this
+		// e := n.Nbody.Slice()
+		// targetType := e[8].Left.Type
+		// log.Println(targetType)
+		// log.Println(e[4])
+		// log.Println(e[4].Left.Type)
+		// params := e[4].Left.Type.Extra.(*types.Func).Params
+		// log.Println(reflect.TypeOf(params.Extra))
+		// params.Extra.(*types.FuncArgs)
+
 	case OPROC:
 		switch n.Left.Op {
 		case OPRINT, OPRINTN:

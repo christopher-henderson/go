@@ -100,7 +100,7 @@ func (t *headerFieldTable) evictOldest(n int) {
 // staticTable pointer.
 //
 // See Section 2.3.3.
-func (t *headerFieldTable) search(f HeaderField) (i uint64, nameValueMatch bool) {
+func (t *headerFieldTable) __search(f HeaderField) (i uint64, nameValueMatch bool) {
 	if !f.Sensitive {
 		if id := t.byNameValue[pairNameValue{f.Name, f.Value}]; id != 0 {
 			return t.idToIndex(id), true

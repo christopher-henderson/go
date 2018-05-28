@@ -2071,6 +2071,10 @@ func typecheck1(n *Node, top int) *Node {
 	case ORETJMP:
 		ok |= Etop
 
+	case OSEARCH:
+		ok |= Etop
+		typecheckslice(n.Nbody.Slice(), Etop)
+
 	case OSELECT:
 		ok |= Etop
 		typecheckselect(n)

@@ -21,6 +21,7 @@ import (
 	"go/ast"
 	"go/scanner"
 	"go/token"
+	"log"
 	"strconv"
 	"strings"
 	"unicode"
@@ -1936,6 +1937,18 @@ func (p *parser) isTypeSwitchGuard(s ast.Stmt) bool {
 	return false
 }
 
+func (p *parser) parseSearchStmt() ast.Stmt {
+	log.Println("WINNING")
+	pos := p.expect(token.SWITCH)
+	p.openScope()
+	defer p.closeScope()
+
+	body := p.parseBlockStmt()
+	// p.expectSemi()
+
+	return &ast.SearchStmt{Search: pos, Body: body}
+}
+
 func (p *parser) parseSwitchStmt() ast.Stmt {
 	if p.trace {
 		defer un(trace(p, "SwitchStmt"))
@@ -2074,7 +2087,6 @@ func (p *parser) parseForStmt() ast.Stmt {
 	if p.trace {
 		defer un(trace(p, "ForStmt"))
 	}
-
 	pos := p.expect(token.FOR)
 	p.openScope()
 	defer p.closeScope()
@@ -2188,6 +2200,8 @@ func (p *parser) parseStmt() (s ast.Stmt) {
 		s = p.parseIfStmt()
 	case token.SWITCH:
 		s = p.parseSwitchStmt()
+	case token.SEARCH:
+		s = p.parseSearchStmt()
 	case token.SELECT:
 		s = p.parseSelectStmt()
 	case token.FOR:

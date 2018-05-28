@@ -15,7 +15,7 @@ import (
 
 // Wrapper around the accept system call that marks the returned file
 // descriptor as nonblocking and close-on-exec.
-func accept(s int) (int, syscall.Sockaddr, string, error) {
+func _accept(s int) (int, syscall.Sockaddr, string, error) {
 	// See ../syscall/exec_unix.go for description of ForkLock.
 	// It is probably okay to hold the lock across syscall.Accept
 	// because we have put fd.sysfd into non-blocking mode.

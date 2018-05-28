@@ -201,6 +201,7 @@ const stopset uint64 = 1<<_Break |
 	1<<_Return |
 	1<<_Select |
 	1<<_Switch |
+	1<<_Search |
 	1<<_Type |
 	1<<_Var
 
@@ -1721,6 +1722,183 @@ func (p *parser) declStmt(f func(*Group) Decl) *DeclStmt {
 	return s
 }
 
+func (p *parser) searchStmt() *SearchStmt {
+	if trace {
+		defer p.trace("searchStmt")()
+	}
+
+	s := new(SearchStmt)
+	s.pos = p.pos()
+
+	p.want(_Search)
+
+	s.Root = p.expr()
+	if !p.got(_Semi) {
+		p.syntax_error(fmt.Sprintf("unexpected %s, expected ;", p.tok))
+	}
+
+	s.UType = p.typeOrNil()
+
+	if p.tok == _Semi {
+		p.want(_Semi)
+		s.Concurrency = p.searchConcurrencypexpr(false)
+	}
+
+	if !p.got(_Lbrace) {
+		p.syntax_error(fmt.Sprintf("unexpected %s, expected {", p.tok))
+	}
+
+	foundChildren := false
+	// foundAccept := false
+	// foundReject := false
+
+	for p.tok != _Rbrace {
+		switch p.tok {
+		case _Children:
+			if foundChildren {
+				p.syntax_error(fmt.Sprintf("duplicate children block at %i:%i, first seen at %s", p.line, p.col, s.Children.Pos()))
+				p.next()
+				continue
+			}
+			foundChildren = true
+			p.want(_Children)
+			if !p.got(_Colon) {
+				p.syntax_error(fmt.Sprintf("unexpected %s, expected :", p.tok))
+			}
+			s.Children = new(BlockStmt)
+			s.Children.List = p.stmtList()
+		case _Accept:
+			p.want(_Accept)
+			if !p.got(_Colon) {
+				p.syntax_error(fmt.Sprintf("unexpected %s, expected :", p.tok))
+			}
+			s.Accept = new(BlockStmt)
+			s.Accept.List = p.stmtList()
+		case _Reject:
+			p.want(_Reject)
+			if !p.got(_Colon) {
+				p.syntax_error(fmt.Sprintf("unexpected %s, expected :", p.tok))
+			}
+			s.Reject = new(BlockStmt)
+			s.Reject.List = p.stmtList()
+		default:
+			p.syntax_error(fmt.Sprintf("unexpected %s, expecting a search directive block", p.tok))
+		}
+	}
+
+	if !p.got(_Rbrace) {
+		p.syntax_error(fmt.Sprintf("unexpected %s, expected }", p.tok))
+	}
+
+	return s
+}
+
+// This is a copy of the pexpr function that does not allow
+// the presensce of a composit literal.
+func (p *parser) searchConcurrencypexpr(keep_parens bool) Expr {
+	if trace {
+		defer p.trace("pexpr")()
+	}
+
+	x := p.operand(keep_parens)
+
+loop:
+	for {
+		pos := p.pos()
+		switch p.tok {
+		case _Dot:
+			p.next()
+			switch p.tok {
+			case _Name:
+				// pexpr '.' sym
+				t := new(SelectorExpr)
+				t.pos = pos
+				t.X = x
+				t.Sel = p.name()
+				x = t
+
+			case _Lparen:
+				p.next()
+				if p.got(_Type) {
+					t := new(TypeSwitchGuard)
+					t.pos = pos
+					t.X = x
+					x = t
+				} else {
+					t := new(AssertExpr)
+					t.pos = pos
+					t.X = x
+					t.Type = p.expr()
+					x = t
+				}
+				p.want(_Rparen)
+
+			default:
+				p.syntax_error("expecting name or (")
+				p.advance(_Semi, _Rparen)
+			}
+
+		case _Lbrack:
+			p.next()
+			p.xnest++
+
+			var i Expr
+			if p.tok != _Colon {
+				i = p.expr()
+				if p.got(_Rbrack) {
+					// x[i]
+					t := new(IndexExpr)
+					t.pos = pos
+					t.X = x
+					t.Index = i
+					x = t
+					p.xnest--
+					break
+				}
+			}
+
+			// x[i:...
+			t := new(SliceExpr)
+			t.pos = pos
+			t.X = x
+			t.Index[0] = i
+			p.want(_Colon)
+			if p.tok != _Colon && p.tok != _Rbrack {
+				// x[i:j...
+				t.Index[1] = p.expr()
+			}
+			if p.got(_Colon) {
+				t.Full = true
+				// x[i:j:...]
+				if t.Index[1] == nil {
+					p.error("middle index required in 3-index slice")
+				}
+				if p.tok != _Rbrack {
+					// x[i:j:k...
+					t.Index[2] = p.expr()
+				} else {
+					p.error("final index required in 3-index slice")
+				}
+			}
+			p.want(_Rbrack)
+
+			x = t
+			p.xnest--
+
+		case _Lparen:
+			t := new(CallExpr)
+			t.pos = pos
+			t.Fun = x
+			t.ArgList, t.HasDots = p.argList()
+			x = t
+		default:
+			break loop
+		}
+	}
+
+	return x
+}
+
 func (p *parser) forStmt() Stmt {
 	if trace {
 		defer p.trace("forStmt")()
@@ -1962,7 +2140,7 @@ func (p *parser) commClause() *CommClause {
 // 	Declaration | LabeledStmt | SimpleStmt |
 // 	GoStmt | ReturnStmt | BreakStmt | ContinueStmt | GotoStmt |
 // 	FallthroughStmt | Block | IfStmt | SwitchStmt | SelectStmt | ForStmt |
-// 	DeferStmt .
+// 	DeferStmt | SearchStmt .
 func (p *parser) stmtOrNil() Stmt {
 	if trace {
 		defer p.trace("stmt " + p.tok.String())()
@@ -2055,6 +2233,9 @@ func (p *parser) stmtOrNil() Stmt {
 		s := new(EmptyStmt)
 		s.pos = p.pos()
 		return s
+
+	case _Search:
+		return p.searchStmt()
 	}
 
 	return nil
@@ -2066,7 +2247,7 @@ func (p *parser) stmtList() (l []Stmt) {
 		defer p.trace("stmtList")()
 	}
 
-	for p.tok != _EOF && p.tok != _Rbrace && p.tok != _Case && p.tok != _Default {
+	for p.tok != _EOF && p.tok != _Rbrace && p.tok != _Case && p.tok != _Default && p.tok != _Children {
 		s := p.stmtOrNil()
 		if s == nil {
 			break
