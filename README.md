@@ -35,3 +35,71 @@ The type of node that this algorithm is searching through is required merely due
 
 ## Where did this come from?
 This code was a constructive demonstration of my master's thesis. The thesis pointed out that languages (such as Prolog) offered search as a first class citizen, but that these languages were often considered obscure and too scientific (...such as Prolog). The research attempts to bring easy to implement, and efficient, graph search to imperative/procedural programming languages in such a way that no programmer will ever dread such algorithms again.
+
+## Motivating Examples
+A small collection of examples may be found in the `examples` directory. The following a complete implentation of the NQueens problem, solved using a number of goroutines equal to the number of CPUs available to the system:
+
+```go
+package main
+
+import (
+	"log"
+	"time"
+	"runtime"
+)
+
+type Queen struct {
+	Column int
+	Row int
+}
+
+func NQueens(N int) {
+	search Queen{0, 0}; Queen; runtime.NumCPU() {
+	children:
+		column := node.Column + 1
+		c := make(chan Queen, 0)
+		// If the parent is in the final column
+		// then there are no children.
+		if column > N {
+			close(c)
+			return c
+		}
+		go func() {
+			defer close(c)
+			for r := 1; r < N+1; r++ {
+				c <- Queen{column, r}
+			}
+		}()
+		return c
+	accept:
+		if len(solution) == N {
+			// stdout is expensive, so you
+			// can get a hefty speedup by
+			// commenting this out.
+			log.Println(solution)
+			return true
+		}
+		return false
+	reject:
+		row, column := node.Row, node.Column
+		for _, q := range solution {
+			r, c := q.Row, q.Column
+			if row == r ||
+				column == c ||
+				row+column == r+c ||
+				row-column == r-c {
+				return true
+			}
+		}
+		return false
+	}
+}
+
+func main() {
+	log.SetFlags(log.Lshortfile)
+	s := time.Now()
+	NQueens(8)
+	log.Println(time.Now().Sub(s))
+}
+
+```
