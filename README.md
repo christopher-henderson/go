@@ -37,7 +37,7 @@ The type of node that this algorithm is searching through is required merely due
 This code was a constructive demonstration of my master's thesis. The thesis pointed out that languages (such as Prolog) offered search as a first class citizen, but that these languages were often considered obscure and too scientific (...such as Prolog). The research attempts to bring easy to implement, and efficient, graph search to imperative/procedural programming languages in such a way that no programmer will ever dread such algorithms again.
 
 ## Motivating Examples
-A small collection of examples may be found in the `examples` directory. The following a complete implentation of the NQueens problem, solved using a number of goroutines equal to the number of CPUs available to the system:
+A small collection of examples may be found in the `examples` directory. The following is a complete implentation of the NQueens problem, solved using a number of goroutines equal to the number of CPUs available to the system:
 
 ```go
 package main
@@ -103,3 +103,9 @@ func main() {
 }
 
 ```
+
+## Efficiency
+@TODO pull from the paper, although the Rust version is 30x faster on NQueens.
+
+## Compatibility
+This compiler is based off of the Go project as of release 1.10.2 ([71bdbf431b79dff61944f22c25c7e085ccfc25d5](https://github.com/christopher-henderson/GoSearch/commit/71bdbf431b79dff61944f22c25c7e085ccfc25d5)). Due to the reservation of `search`, `children`, `accept`, and `reject` in the language the API with standard Go is broken. The _ABI_, however, remains intact. The result is that code written in the GoSearch dialect may be compiled by this project and then later linked into normal Go using the standard compiler.
