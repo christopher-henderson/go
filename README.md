@@ -1,44 +1,32 @@
-# The Go Programming Language
+# The GoSearch Programming Language
 
-Go is an open source programming language that makes it easy to build simple,
-reliable, and efficient software.
+GoSearch is a dialect of the Go programming language which implements the `search` keyword.
 
-![Gopher image](doc/gopher/fiveyears.jpg)
-*Gopher image by [Renee French][rf], licensed under [Creative Commons 3.0 Attributions license][cc3-by].*
+Given two facts:
+* The node from which no decisions have yet been made (henceforth known as the First Choice Generator, or FCG)
+* A block of code which returns a generator channel that defines iteration of the children of a given node.
 
-Our canonical Git repository is located at https://go.googlesource.com/go.
-There is a mirror of the repository at https://github.com/golang/go.
+...then any depth-first search may be conducted on the user's behalf.
 
-Unless otherwise noted, the Go source files are distributed under the
-BSD-style license found in the LICENSE file.
+Given either/or both of the following facts:
+* A block of code that accepts a slice of user defined type and a candidate node and returns a boolean indicating whether that node is grounds for rejection of that subbranch.
+* A block of code that accepts a slice of user defined type and returns a boolean indicating whether a complete solution has been found.
 
-### Download and Install
+...then any backracking algorithm may be conducted on the user's behalf.
 
-#### Binary Distributions
+The structure of a `search` block is as follows:
 
-Official binary distributions are available at https://golang.org/dl/.
+```go
+search FCG; typeof(FCG)[; Concurrency Level] {
+	children:
+		...
+	[
+	accept:
+		...
+	reject:
+		...
+	]
+}
+```
 
-After downloading a binary release, visit https://golang.org/doc/install
-or load doc/install.html in your web browser for installation
-instructions.
-
-#### Install From Source
-
-If a binary distribution is not available for your combination of
-operating system and architecture, visit
-https://golang.org/doc/install/source or load doc/install-source.html
-in your web browser for source installation instructions.
-
-### Contributing
-
-Go is the work of hundreds of contributors. We appreciate your help!
-
-To contribute, please read the contribution guidelines:
-	https://golang.org/doc/contribute.html
-
-Note that the Go project uses the issue tracker for bug reports and
-proposals only. See https://golang.org/wiki/Questions for a list of
-places to ask questions about the Go language.
-
-[rf]: https://reneefrench.blogspot.com/
-[cc3-by]: https://creativecommons.org/licenses/by/3.0/
+Where `Concurrency Level` is an optional integer value > 0 and defines the number of concurrency subbranch searches allowed by the search engine. `accept` and `reject` are optional code blocks intended for defining bactracking algorithms.
