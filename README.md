@@ -29,4 +29,9 @@ search FCG; typeof(FCG)[; Concurrency Level] {
 }
 ```
 
-Where `Concurrency Level` is an optional integer value > 0 and defines the number of concurrency subbranch searches allowed by the search engine. `accept` and `reject` are optional code blocks intended for defining bactracking algorithms.
+Where `Concurrency Level` is an optional integer value > 0 and defines the number of concurrent subbranch searches allowed by the search engine. `accept` and `reject` are optional code blocks intended for defining bactracking algorithms.
+
+The type of node that this algorithm is searching through is required merely due to a technical difficulty in implementing this feature on my own with no real access to the Go compiler maintainers.
+
+## Where did this come from?
+This code was a constructive demonstration of my master's thesis. The thesis pointed out that languages (such as Prolog) offered search as a first class citizen, but that these languages were often considered obscure and too scientific (...such as Prolog). The research attempts to bring easy to implement, and efficient, graph search to imperative/procedural programming languages in such a way that no programmer will ever dread such algorithms again.
