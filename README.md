@@ -119,7 +119,11 @@ func main() {
 ```
 
 ## Efficiency
-@TODO pull from the paper, although the Rust version is 30x faster on NQueens.
+@TODO pull richer explanation from the paper
+* Search and backtracking are stack powered algorithms. This engine allocates that stack to the heap and manages it manually rather than relying on the call stack.
+* The concurrent graph search is implemented by a naive global round robin work stealing algorithm, where each time work is stolen a copy of the current solution is incurred. This causes concurrent speedups to be sublinear with respect to number of physical CPUs available (for example, 3.80x speedup for a 4 cores).
+* No additional time complexity beyond that of the user's target algorithm complexity is incured. The exception is the cost of copying the solution data structure.
+* If you want a much - _MUCH_ - faster version of this code see [RustSearch](https://github.com/christopher-henderson/RustSearch).
 
 ## Compatibility
 This compiler is based off of the Go project as of release 1.10.2 ([71bdbf431b79dff61944f22c25c7e085ccfc25d5](https://github.com/christopher-henderson/GoSearch/commit/71bdbf431b79dff61944f22c25c7e085ccfc25d5)). Due to the reservation of `search`, `children`, `accept`, and `reject` in the language the API with standard Go is broken. The _ABI_, however, remains intact. The result is that code written in the GoSearch dialect may be compiled by this project and then later linked into normal Go using the standard compiler.
