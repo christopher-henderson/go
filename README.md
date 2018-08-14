@@ -42,6 +42,8 @@ This code was a constructive demonstration of my master's thesis. The thesis poi
 $ git clone git@github.com:christopher-henderson/GoSearch.git
 $ cd GoSearch/src
 $ ./make.bash
+$ cd ..
+$ bin/go run motivating_example.go
 ```
 
 This makes the assumption that you have a working Go compiler in your path already to use as a bootstrap.
