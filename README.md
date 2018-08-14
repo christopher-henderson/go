@@ -127,3 +127,6 @@ func main() {
 
 ## Compatibility
 This compiler is based off of the Go project as of release 1.10.2 ([71bdbf431b79dff61944f22c25c7e085ccfc25d5](https://github.com/christopher-henderson/GoSearch/commit/71bdbf431b79dff61944f22c25c7e085ccfc25d5)). Due to the reservation of `search`, `children`, `accept`, and `reject` in the language the API with standard Go is broken. The _ABI_, however, remains intact. The result is that code written in the GoSearch dialect may be compiled by this project and then later linked into normal Go using the standard compiler.
+
+## Tests
+The Go testing framework uses the `go/parser` pacakge, which is more-or-less a mirror of the parser package internal to the compiler. I'm not exactly sure why, but it's easy to imagine that it's trying to give richer errors or isolation in a testing environment. I haven't gotten to updating the `go/parser` package with this new syntax, so as a result unit tests to not currently work in this dialect. If you _really_ want to use this code, submit an issue and I'll give it go so that we can all test.
