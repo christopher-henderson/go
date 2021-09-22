@@ -38,11 +38,14 @@ This code was a constructive demonstration of my master's thesis. The thesis poi
 
 ## Building
 
+The following downloads a bootstrap compiler, compiles this compiler, and runs the `motivating_example`.
+
 ```bash
 git clone git@github.com:christopher-henderson/GoSearch.git
 cd GoSearch
 mkdir bootstrap
 cd bootstrap
+# Replace this with a different architecture or platform as is necessary.
 curl -O -L https://golang.org/dl/go1.10.2.linux-amd64.tar.gz
 tar zxvf go1.10.2.linux-amd64.tar.gz
 export GOROOT_BOOTSTRAP=$(pwd)/go
@@ -52,7 +55,7 @@ cd ..
 bin/go run motivating_example.go
 ```
 
-This makes the assumption that you have a working Go compiler in your path already to use as a bootstrap.
+If you are on Mac, then you can find the appropriate bootstrap compiler at [go1.10.2.darwin-amd64.tar.gz](https://golang.org/dl/go1.10.2.darwin-amd64.tar.gz).
 
 The target compiler will be available at `GoSearch/bin/go`.
 
