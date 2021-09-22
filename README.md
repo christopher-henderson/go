@@ -39,11 +39,17 @@ This code was a constructive demonstration of my master's thesis. The thesis poi
 ## Building
 
 ```bash
-$ git clone git@github.com:christopher-henderson/GoSearch.git
-$ cd GoSearch/src
-$ ./make.bash
-$ cd ..
-$ bin/go run motivating_example.go
+git clone git@github.com:christopher-henderson/GoSearch.git
+cd GoSearch
+mkdir bootstrap
+cd bootstrap
+curl -O -L https://golang.org/dl/go1.10.2.linux-amd64.tar.gz
+tar zxvf go1.10.2.linux-amd64.tar.gz
+export GOROOT_BOOTSTRAP=$(pwd)/go
+cd ../src
+./make.bash
+cd ..
+bin/go run motivating_example.go
 ```
 
 This makes the assumption that you have a working Go compiler in your path already to use as a bootstrap.
